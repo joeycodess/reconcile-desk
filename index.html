@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Match invoices to payments and review exceptions in an interactive, browser-based automation demo.">
+<title>Reconcile Desk · Payment reconciliation</title>
+<link rel="stylesheet" href="./style.css">
+<script type="module" src="./app.mjs"></script>
+</head>
+<body>
+<header class="top shell"><a class="brand" href="./">Reconcile<span>Desk</span></a><a href="https://ogheneyole.vercel.app/">Ogheneyole Gold ↗</a></header>
+<main class="shell">
+  <div class="intro">
+    <h1>Payment reconciliation</h1>
+    <p>Match invoices to payments, review exceptions, and export an audit report. Files are processed in your browser.</p>
+  </div>
+  <section class="panel inputs" aria-labelledby="inputs-title">
+    <div class="panel-heading"><h2 id="inputs-title">Input files</h2><button type="button" id="load" class="secondary">Use sample data</button></div>
+    <div class="file-grid">
+      <div><label for="invoices">Invoices CSV</label><input type="file" id="invoices" accept=".csv,text/csv"><p><code>invoice_id,reference,amount</code> <a href="#" id="sample-invoices" download="invoices.csv">Sample CSV</a></p></div>
+      <div><label for="payments">Payments CSV</label><input type="file" id="payments" accept=".csv,text/csv"><p><code>payment_id,reference,amount</code> <a href="#" id="sample-payments" download="payments.csv">Sample CSV</a></p></div>
+    </div>
+    <div class="run-row"><button type="button" id="run">Run reconciliation <span aria-hidden="true">→</span></button><p id="status" role="status"></p></div>
+    <p id="error" role="alert" hidden></p>
+  </section>
+  <section class="results" aria-labelledby="results-title">
+    <div class="panel-heading"><h2 id="results-title">Reconciliation results</h2><button id="export" type="button" class="secondary" disabled>Export CSV</button></div>
+    <p id="empty" class="empty">Run a reconciliation to see matches and exceptions here.</p>
+    <div id="report" hidden>
+      <dl class="metrics"><div><dt>References</dt><dd id="total"></dd></div><div><dt>Matched</dt><dd id="matched"></dd></div><div><dt>Needs review</dt><dd id="review"></dd></div></dl>
+      <label class="filter"><input type="checkbox" id="exceptions"> Exceptions only</label>
+      <div class="table-scroll" tabindex="0" role="region" aria-label="Reconciliation results table"><table>
+        <thead><tr><th scope="col">Reference</th><th scope="col">Expected</th><th scope="col">Received</th><th scope="col">Status</th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table></div>
+    </div>
+  </section>
+</main>
+<footer class="shell"><p>One currency per run. Amounts are compared to the cent.</p></footer>
+</body>
+</html>
